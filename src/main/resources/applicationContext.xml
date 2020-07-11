@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring" xmlns:elasticserach="http://www.springframework.org/schema/data/elasticsearch"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd http://www.springframework.org/schema/data/elasticsearch http://www.springframework.org/schema/data/elasticsearch/spring-elasticsearch.xsd">
+
+    <!--Service注解 ,Repository注解-->
+    <context:component-scan base-package="com.tjpu.employ">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"></context:exclude-filter>
+    </context:component-scan>
+
+<!--    读取配置文件-->
+    <context:property-placeholder location="classpath:db.properties"></context:property-placeholder>
+
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="user" value="${jdbc.user}"></property>
+        <property name="password" value="${jdbc.password}"></property>
+        <property name="jdbcUrl" value="${jdbc.jdbcUrl}"></property>
+        <property name="driverClass" value="${jdbc.driverClass}"></property>
+    </bean>
+
+    <!--Mybatis-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="configLocation" value="classpath:mybatis-config.xml"></property>
+        <property name="dataSource" ref="dataSource"></property>
+<!--        mapper.xml配置文件位置-->
+        <property name="mapperLocations" value="classpath:mapper/*xml"></property>
+    </bean>
+
+<!--    mapper接口放置位置-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.tjpu.employ.dao"></property>
+    </bean>
+
+    <!--事务-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+
+    <tx:annotation-driven transaction-manager="transactionManager"></tx:annotation-driven>
+
+    <aop:config>
+        <aop:pointcut id="pointcut" expression="execution(* com.tjpu.employ.service.*.*(..))"></aop:pointcut>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut" ></aop:advisor>
+    </aop:config>
+
+
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="*"/>
+<!--            select开头的方法只可读，不可写-->
+            <tx:method name="select*" read-only="true"></tx:method>
+        </tx:attributes>
+    </tx:advice>
+<!--启用注解AOP-->
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+<!--Shiro的realm注册,安全管理器-->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="sessionMode" value="native"/>
+        <property name="authenticator" ref="authenticator"></property>
+        <property name="realms">
+            <list>
+                <ref bean="seekerLoginRealm"></ref>
+            </list>
+        </property>
+    </bean>
+<!--多realm认证策略-->
+    <bean id="authenticator" class="org.apache.shiro.authc.pam.ModularRealmAuthenticator">
+        <property name="authenticationStrategy">
+            <bean class="org.apache.shiro.authc.pam.FirstSuccessfulStrategy"></bean>
+        </property>
+    </bean>
+
+    <!--    Shiro缓存管理-->
+<!--    启用Shiro注解-->
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"></bean>
+
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+    depends-on="lifecycleBeanPostProcessor"></bean>
+
+    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager"></property>
+    </bean>
+
+
+<!--    Shiro权限控制-->
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager"></property>
+        <property name="loginUrl" value="/login.jsp"></property>
+        <property name="unauthorizedUrl" value="/unauthorized"></property>
+        <property name="filterChainDefinitions">
+            <value>
+<!--                登录登出-->
+                /login.jsp  = anon
+                /login     = anon
+                /logout     = logout
+                /toSeekerRegistry = anon
+                /toEnterRegistry = anon
+                /enterRegistry = anon
+                /seekerRegistry = anon
+
+<!--                权限管理-->
+                /admin  = roles[admin]
+<!--                请求限制-->
+                /**         = authc
+            </value>
+        </property>
+
+        <property name="filters">
+            <map>
+                <entry key="logout" value-ref="logoutFilter" />
+            </map>
+        </property>
+    </bean>
+
+<!--    登出后跳转页面-->
+    <bean id="logoutFilter" class="org.apache.shiro.web.filter.authc.LogoutFilter">
+        <property name="redirectUrl" value="/login.jsp" />
+    </bean>
+
+    <bean id="conversionService"
+          class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <property name="converters">
+            <set>
+                <bean class="com.tjpu.employ.utils.converter.DateConverter" />
+            </set>
+        </property>
+    </bean>
+
+<!--    redis-->
+    <bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig" >
+        <property name="testOnReturn" value="${redis.testOnReturn}"></property>
+        <property name="testOnBorrow" value="${redis.testOnBorrow}"></property>
+    </bean>
+
+    <bean id="masterConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+        <property name="hostName" value="${redis.master.host}"></property>
+        <property name="port" value="${redis.master.port}"></property>
+    </bean>
+
+    <bean id="stringRedisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate">
+        <property name="connectionFactory" ref="masterConnectionFactory"></property>
+    </bean>
+
+    <bean id="objectRedisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+        <property name="connectionFactory" ref="masterConnectionFactory"></property>
+    </bean>
+
+    <bean id="slaveConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+        <property name="hostName" value="${redis.slave.host}"></property>
+        <property name="port" value="${redis.slave.port}"></property>
+    </bean>
+
+    <bean id="slaveStringRedisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate">
+        <property name="connectionFactory" ref="slaveConnectionFactory"></property>
+    </bean>
+
+    <bean id="slaveObjectRedisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+        <property name="connectionFactory" ref="slaveConnectionFactory"></property>
+    </bean>
+
+    <!--    解决无法将template@autowried-->
+    <bean class=" com.tjpu.employ.utils.cache.RedisCacheTransfer">
+        <constructor-arg name="objectRedisTemplate" ref="objectRedisTemplate"></constructor-arg>
+        <constructor-arg name="slaveObjectRedisTemplate" ref="slaveObjectRedisTemplate"></constructor-arg>
+        <constructor-arg name="slaveStringRedisTemplate" ref="slaveStringRedisTemplate"></constructor-arg>
+        <constructor-arg name="stringRedisTemplate" ref="stringRedisTemplate"></constructor-arg>
+    </bean>
+
+
+<!--    elasticSearch-->
+    <elasticserach:repositories base-package="com.tjpu.employ.elasticsearch.repository"></elasticserach:repositories>
+    <elasticserach:transport-client id="client" client-transport-sniff="false"
+            cluster-nodes="192.168.59.130:9300" cluster-name="elasticsearch"></elasticserach:transport-client>
+    <bean id="elasticsearchTemplate" class="org.springframework.data.elasticsearch.core.ElasticsearchTemplate">
+        <constructor-arg name="client" ref="client"></constructor-arg>
+    </bean>
+</beans>
+
+
+
+
+
+
+
+
+
+
+
+

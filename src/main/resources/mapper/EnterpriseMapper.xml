@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tjpu.employ.dao.EnterpriseMapper">
+
+  <cache
+          type="com.tjpu.employ.utils.cache.RedisCache"
+          eviction="LRU"
+          size="2048"
+          readOnly="false"
+  />
+<!--  Enterprise selectByNameWithHireInfo(String enterName);  -->
+  <resultMap id="enterInfoMap" type="com.tjpu.employ.beans.Enterprise">
+    <id column="enter_id" property="enterId"></id>
+    <result column="enter_name" property="enterName"></result>
+    <result column="enter_email" property="enterEmail"></result>
+    <result column="enter_password" property="enterPassword"></result>
+    <result column="enter_username" property="enterUsername"></result>
+    <result column="enter_type" property="enterType"></result>
+    <result column="enter_info" property="enterInfo"></result>
+    <result column="enter_location" property="enterLocation"></result>
+    <result column="enter_phone" property="enterPhone"></result>
+    <collection property="hireInfos" ofType="com.tjpu.employ.beans.HireInfo">
+      <id column="hire_id" property="hireId"></id>
+      <result column="hire_salary" property="hireSalary"></result>
+      <result column="hire_years" property="hireYears"></result>
+      <result column="hire_education" property="hireEducation"></result>
+      <result column="hire_language" property="hireLanguage"></result>
+      <result column="hire_occupation" property="hireOccupation"></result>
+    </collection>
+  </resultMap>
+
+  <select id="selectByNameWithHireInfo" resultMap="enterInfoMap" >
+    select e.*,h.* from enterprise e left
+            join hire_info h on e.enter_id = h.enter_id
+            <where>
+              <if test="enterName != null">
+                and e.enter_name=#{enterName}
+              </if>
+            </where>
+  </select>
+
+
+<!--xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+  <resultMap id="BaseResultMap" type="com.tjpu.employ.beans.Enterprise">
+    <id column="enter_id" jdbcType="INTEGER" property="enterId" />
+    <result column="enter_name" jdbcType="VARCHAR" property="enterName" />
+    <result column="enter_email" jdbcType="VARCHAR" property="enterEmail" />
+    <result column="enter_password" jdbcType="VARCHAR" property="enterPassword" />
+    <result column="enter_username" jdbcType="VARCHAR" property="enterUsername" />
+    <result column="enter_type" jdbcType="VARCHAR" property="enterType" />
+    <result column="enter_info" jdbcType="VARCHAR" property="enterInfo" />
+    <result column="enter_location" jdbcType="VARCHAR" property="enterLocation" />
+    <result column="enter_phone" jdbcType="VARCHAR" property="enterPhone" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    enter_id, enter_name, enter_email, enter_password, enter_username, enter_type, enter_info, 
+    enter_location, enter_phone
+  </sql>
+  <select id="selectByExample" parameterType="com.tjpu.employ.beans.EnterpriseExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from enterprise
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from enterprise
+    where enter_id = #{enterId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from enterprise
+    where enter_id = #{enterId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tjpu.employ.beans.EnterpriseExample">
+    delete from enterprise
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" useGeneratedKeys="true" keyProperty="enterId" parameterType="com.tjpu.employ.beans.Enterprise">
+    insert into enterprise (enter_id, enter_name, enter_email, 
+      enter_password, enter_username, enter_type, 
+      enter_info, enter_location, enter_phone
+      )
+    values (#{enterId,jdbcType=INTEGER}, #{enterName,jdbcType=VARCHAR}, #{enterEmail,jdbcType=VARCHAR}, 
+      #{enterPassword,jdbcType=VARCHAR}, #{enterUsername,jdbcType=VARCHAR}, #{enterType,jdbcType=VARCHAR}, 
+      #{enterInfo,jdbcType=VARCHAR}, #{enterLocation,jdbcType=VARCHAR}, #{enterPhone,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tjpu.employ.beans.Enterprise">
+    insert into enterprise
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="enterId != null">
+        enter_id,
+      </if>
+      <if test="enterName != null">
+        enter_name,
+      </if>
+      <if test="enterEmail != null">
+        enter_email,
+      </if>
+      <if test="enterPassword != null">
+        enter_password,
+      </if>
+      <if test="enterUsername != null">
+        enter_username,
+      </if>
+      <if test="enterType != null">
+        enter_type,
+      </if>
+      <if test="enterInfo != null">
+        enter_info,
+      </if>
+      <if test="enterLocation != null">
+        enter_location,
+      </if>
+      <if test="enterPhone != null">
+        enter_phone,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="enterId != null">
+        #{enterId,jdbcType=INTEGER},
+      </if>
+      <if test="enterName != null">
+        #{enterName,jdbcType=VARCHAR},
+      </if>
+      <if test="enterEmail != null">
+        #{enterEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="enterPassword != null">
+        #{enterPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="enterUsername != null">
+        #{enterUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="enterType != null">
+        #{enterType,jdbcType=VARCHAR},
+      </if>
+      <if test="enterInfo != null">
+        #{enterInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="enterLocation != null">
+        #{enterLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="enterPhone != null">
+        #{enterPhone,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tjpu.employ.beans.EnterpriseExample" resultType="java.lang.Long">
+    select count(*) from enterprise
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update enterprise
+    <set>
+      <if test="record.enterId != null">
+        enter_id = #{record.enterId,jdbcType=INTEGER},
+      </if>
+      <if test="record.enterName != null">
+        enter_name = #{record.enterName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enterEmail != null">
+        enter_email = #{record.enterEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enterPassword != null">
+        enter_password = #{record.enterPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enterUsername != null">
+        enter_username = #{record.enterUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enterType != null">
+        enter_type = #{record.enterType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enterInfo != null">
+        enter_info = #{record.enterInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enterLocation != null">
+        enter_location = #{record.enterLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enterPhone != null">
+        enter_phone = #{record.enterPhone,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update enterprise
+    set enter_id = #{record.enterId,jdbcType=INTEGER},
+      enter_name = #{record.enterName,jdbcType=VARCHAR},
+      enter_email = #{record.enterEmail,jdbcType=VARCHAR},
+      enter_password = #{record.enterPassword,jdbcType=VARCHAR},
+      enter_username = #{record.enterUsername,jdbcType=VARCHAR},
+      enter_type = #{record.enterType,jdbcType=VARCHAR},
+      enter_info = #{record.enterInfo,jdbcType=VARCHAR},
+      enter_location = #{record.enterLocation,jdbcType=VARCHAR},
+      enter_phone = #{record.enterPhone,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tjpu.employ.beans.Enterprise">
+    update enterprise
+    <set>
+      <if test="enterName != null">
+        enter_name = #{enterName,jdbcType=VARCHAR},
+      </if>
+      <if test="enterEmail != null">
+        enter_email = #{enterEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="enterPassword != null">
+        enter_password = #{enterPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="enterUsername != null">
+        enter_username = #{enterUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="enterType != null">
+        enter_type = #{enterType,jdbcType=VARCHAR},
+      </if>
+      <if test="enterInfo != null">
+        enter_info = #{enterInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="enterLocation != null">
+        enter_location = #{enterLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="enterPhone != null">
+        enter_phone = #{enterPhone,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where enter_id = #{enterId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tjpu.employ.beans.Enterprise">
+    update enterprise
+    set enter_name = #{enterName,jdbcType=VARCHAR},
+      enter_email = #{enterEmail,jdbcType=VARCHAR},
+      enter_password = #{enterPassword,jdbcType=VARCHAR},
+      enter_username = #{enterUsername,jdbcType=VARCHAR},
+      enter_type = #{enterType,jdbcType=VARCHAR},
+      enter_info = #{enterInfo,jdbcType=VARCHAR},
+      enter_location = #{enterLocation,jdbcType=VARCHAR},
+      enter_phone = #{enterPhone,jdbcType=VARCHAR}
+    where enter_id = #{enterId,jdbcType=INTEGER}
+  </update>
+
+</mapper>

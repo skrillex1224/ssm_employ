@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tjpu.employ.dao.JobSeekerMapper">
+  <cache
+          type="com.tjpu.employ.utils.cache.RedisCache"
+          eviction="LRU"
+          size="2048"
+          readOnly="false"
+  />
+
+<!--  JobSeeker selectBySeekerEmail(String email);-->
+  <resultMap id="SeekerInterviewInfosMap" type="com.tjpu.employ.beans.JobSeeker">
+    <id column="seeker_id" jdbcType="INTEGER" property="seekerId" />
+    <result column="seeker_name" jdbcType="VARCHAR" property="seekerName" />
+    <result column="seeker_email" jdbcType="VARCHAR" property="seekerEmail" />
+    <result column="seeker_password" jdbcType="VARCHAR" property="seekerPassword" />
+    <result column="seeker_age" jdbcType="INTEGER" property="seekerAge" />
+    <result column="seeker_years" jdbcType="INTEGER" property="seekerYears" />
+    <result column="seeker_educ" jdbcType="VARCHAR" property="seekerEduc" />
+    <result column="seeker_language" jdbcType="CHAR" property="seekerLanguage" />
+    <result column="seeker_gender" jdbcType="TINYINT" property="seekerGender" />
+    <result column="seeker_resume" property="seekerResume"></result>
+    <collection property="seekHireInfos" ofType="com.tjpu.employ.beans.SeekHireInfo">
+      <result column="seeker_id" property="seekerId"></result>
+      <result column="hire_id" property="hireId"></result>
+      <result column="process_status" property="processStatus"></result>
+      <result column="order_interview_time" property="orderInterviewTime"></result>
+      <result column="interview_result" property="interviewResult"></result>
+    </collection>
+     <collection property="hireInfos" ofType="com.tjpu.employ.beans.HireInfo">
+       <id column="hire_id" jdbcType="INTEGER" property="hireId" />
+       <result column="hire_salary" jdbcType="BIGINT" property="hireSalary" />
+       <result column="hire_years" jdbcType="INTEGER" property="hireYears" />
+       <result column="hire_education" jdbcType="VARCHAR" property="hireEducation" />
+       <result column="hire_language" jdbcType="CHAR" property="hireLanguage" />
+       <result column="hire_occupation" jdbcType="VARCHAR" property="hireOccupation" />
+       <association property="enterprise" javaType="com.tjpu.employ.beans.Enterprise">
+         <id column="enter_id" property="enterId"></id>
+         <result column="enter_name" property="enterName"></result>
+         <result column="enter_email" property="enterEmail"></result>
+         <result column="enter_password" property="enterPassword"></result>
+         <result column="enter_username" property="enterUsername"></result>
+         <result column="enter_type" property="enterType"></result>
+         <result column="enter_info" property="enterInfo"></result>
+         <result column="enter_location" property="enterLocation"></result>
+         <result column="enter_phone" property="enterPhone"></result>
+       </association>
+     </collection>
+  </resultMap>
+
+  <select id="selectBySeekerEmail" resultMap="SeekerInterviewInfosMap">
+    select js.*,shi.*,hi.*,e.*
+    from job_seeker js left join seeker_hire_info shi on js.seeker_id = shi.seeker_id
+    left join hire_info hi on shi.hire_id = hi.hire_id
+    left join enterprise e on hi.enter_id = e.enter_id
+    where js.seeker_email = #{email}
+  </select>
+
+
+<!--  ######################################-->
+  <resultMap id="BaseResultMap" type="com.tjpu.employ.beans.JobSeeker">
+    <id column="seeker_id" jdbcType="INTEGER" property="seekerId" />
+    <result column="seeker_name" jdbcType="VARCHAR" property="seekerName" />
+    <result column="seeker_email" jdbcType="VARCHAR" property="seekerEmail" />
+    <result column="seeker_password" jdbcType="VARCHAR" property="seekerPassword" />
+    <result column="seeker_age" jdbcType="INTEGER" property="seekerAge" />
+    <result column="seeker_years" jdbcType="INTEGER" property="seekerYears" />
+    <result column="seeker_educ" jdbcType="VARCHAR" property="seekerEduc" />
+    <result column="seeker_language" jdbcType="CHAR" property="seekerLanguage" />
+    <result column="seeker_gender" jdbcType="TINYINT" property="seekerGender" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.tjpu.employ.beans.JobSeeker">
+    <result column="seeker_resume" jdbcType="LONGVARBINARY" property="seekerResume" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    seeker_id, seeker_name, seeker_email, seeker_password, seeker_age, seeker_years, 
+    seeker_educ, seeker_language, seeker_gender
+  </sql>
+  <sql id="Blob_Column_List">
+    seeker_resume
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.tjpu.employ.beans.JobSeekerExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from job_seeker
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.tjpu.employ.beans.JobSeekerExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from job_seeker
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from job_seeker
+    where seeker_id = #{seekerId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from job_seeker
+    where seeker_id = #{seekerId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tjpu.employ.beans.JobSeekerExample">
+    delete from job_seeker
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tjpu.employ.beans.JobSeeker">
+    insert into job_seeker (seeker_id, seeker_name, seeker_email, 
+      seeker_password, seeker_age, seeker_years, 
+      seeker_educ, seeker_language, seeker_gender, 
+      seeker_resume)
+    values (#{seekerId,jdbcType=INTEGER}, #{seekerName,jdbcType=VARCHAR}, #{seekerEmail,jdbcType=VARCHAR}, 
+      #{seekerPassword,jdbcType=VARCHAR}, #{seekerAge,jdbcType=INTEGER}, #{seekerYears,jdbcType=INTEGER}, 
+      #{seekerEduc,jdbcType=VARCHAR}, #{seekerLanguage,jdbcType=CHAR}, #{seekerGender,jdbcType=TINYINT}, 
+      #{seekerResume,jdbcType=LONGVARBINARY})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tjpu.employ.beans.JobSeeker">
+    insert into job_seeker
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="seekerId != null">
+        seeker_id,
+      </if>
+      <if test="seekerName != null">
+        seeker_name,
+      </if>
+      <if test="seekerEmail != null">
+        seeker_email,
+      </if>
+      <if test="seekerPassword != null">
+        seeker_password,
+      </if>
+      <if test="seekerAge != null">
+        seeker_age,
+      </if>
+      <if test="seekerYears != null">
+        seeker_years,
+      </if>
+      <if test="seekerEduc != null">
+        seeker_educ,
+      </if>
+      <if test="seekerLanguage != null">
+        seeker_language,
+      </if>
+      <if test="seekerGender != null">
+        seeker_gender,
+      </if>
+      <if test="seekerResume != null">
+        seeker_resume,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="seekerId != null">
+        #{seekerId,jdbcType=INTEGER},
+      </if>
+      <if test="seekerName != null">
+        #{seekerName,jdbcType=VARCHAR},
+      </if>
+      <if test="seekerEmail != null">
+        #{seekerEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="seekerPassword != null">
+        #{seekerPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="seekerAge != null">
+        #{seekerAge,jdbcType=INTEGER},
+      </if>
+      <if test="seekerYears != null">
+        #{seekerYears,jdbcType=INTEGER},
+      </if>
+      <if test="seekerEduc != null">
+        #{seekerEduc,jdbcType=VARCHAR},
+      </if>
+      <if test="seekerLanguage != null">
+        #{seekerLanguage,jdbcType=CHAR},
+      </if>
+      <if test="seekerGender != null">
+        #{seekerGender,jdbcType=TINYINT},
+      </if>
+      <if test="seekerResume != null">
+        #{seekerResume,jdbcType=LONGVARBINARY},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tjpu.employ.beans.JobSeekerExample" resultType="java.lang.Long">
+    select count(*) from job_seeker
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update job_seeker
+    <set>
+      <if test="record.seekerId != null">
+        seeker_id = #{record.seekerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.seekerName != null">
+        seeker_name = #{record.seekerName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.seekerEmail != null">
+        seeker_email = #{record.seekerEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.seekerPassword != null">
+        seeker_password = #{record.seekerPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.seekerAge != null">
+        seeker_age = #{record.seekerAge,jdbcType=INTEGER},
+      </if>
+      <if test="record.seekerYears != null">
+        seeker_years = #{record.seekerYears,jdbcType=INTEGER},
+      </if>
+      <if test="record.seekerEduc != null">
+        seeker_educ = #{record.seekerEduc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.seekerLanguage != null">
+        seeker_language = #{record.seekerLanguage,jdbcType=CHAR},
+      </if>
+      <if test="record.seekerGender != null">
+        seeker_gender = #{record.seekerGender,jdbcType=TINYINT},
+      </if>
+      <if test="record.seekerResume != null">
+        seeker_resume = #{record.seekerResume,jdbcType=LONGVARBINARY},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update job_seeker
+    set seeker_id = #{record.seekerId,jdbcType=INTEGER},
+      seeker_name = #{record.seekerName,jdbcType=VARCHAR},
+      seeker_email = #{record.seekerEmail,jdbcType=VARCHAR},
+      seeker_password = #{record.seekerPassword,jdbcType=VARCHAR},
+      seeker_age = #{record.seekerAge,jdbcType=INTEGER},
+      seeker_years = #{record.seekerYears,jdbcType=INTEGER},
+      seeker_educ = #{record.seekerEduc,jdbcType=VARCHAR},
+      seeker_language = #{record.seekerLanguage,jdbcType=CHAR},
+      seeker_gender = #{record.seekerGender,jdbcType=TINYINT},
+      seeker_resume = #{record.seekerResume,jdbcType=LONGVARBINARY}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update job_seeker
+    set seeker_id = #{record.seekerId,jdbcType=INTEGER},
+      seeker_name = #{record.seekerName,jdbcType=VARCHAR},
+      seeker_email = #{record.seekerEmail,jdbcType=VARCHAR},
+      seeker_password = #{record.seekerPassword,jdbcType=VARCHAR},
+      seeker_age = #{record.seekerAge,jdbcType=INTEGER},
+      seeker_years = #{record.seekerYears,jdbcType=INTEGER},
+      seeker_educ = #{record.seekerEduc,jdbcType=VARCHAR},
+      seeker_language = #{record.seekerLanguage,jdbcType=CHAR},
+      seeker_gender = #{record.seekerGender,jdbcType=TINYINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tjpu.employ.beans.JobSeeker">
+    update job_seeker
+    <set>
+      <if test="seekerName != null">
+        seeker_name = #{seekerName,jdbcType=VARCHAR},
+      </if>
+      <if test="seekerEmail != null">
+        seeker_email = #{seekerEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="seekerPassword != null">
+        seeker_password = #{seekerPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="seekerAge != null">
+        seeker_age = #{seekerAge,jdbcType=INTEGER},
+      </if>
+      <if test="seekerYears != null">
+        seeker_years = #{seekerYears,jdbcType=INTEGER},
+      </if>
+      <if test="seekerEduc != null">
+        seeker_educ = #{seekerEduc,jdbcType=VARCHAR},
+      </if>
+      <if test="seekerLanguage != null">
+        seeker_language = #{seekerLanguage,jdbcType=CHAR},
+      </if>
+      <if test="seekerGender != null">
+        seeker_gender = #{seekerGender,jdbcType=TINYINT},
+      </if>
+      <if test="seekerResume != null">
+        seeker_resume = #{seekerResume,jdbcType=LONGVARBINARY},
+      </if>
+    </set>
+    where seeker_id = #{seekerId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.tjpu.employ.beans.JobSeeker">
+    update job_seeker
+    set seeker_name = #{seekerName,jdbcType=VARCHAR},
+      seeker_email = #{seekerEmail,jdbcType=VARCHAR},
+      seeker_password = #{seekerPassword,jdbcType=VARCHAR},
+      seeker_age = #{seekerAge,jdbcType=INTEGER},
+      seeker_years = #{seekerYears,jdbcType=INTEGER},
+      seeker_educ = #{seekerEduc,jdbcType=VARCHAR},
+      seeker_language = #{seekerLanguage,jdbcType=CHAR},
+      seeker_gender = #{seekerGender,jdbcType=TINYINT},
+      seeker_resume = #{seekerResume,jdbcType=LONGVARBINARY}
+    where seeker_id = #{seekerId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tjpu.employ.beans.JobSeeker">
+    update job_seeker
+    set seeker_name = #{seekerName,jdbcType=VARCHAR},
+      seeker_email = #{seekerEmail,jdbcType=VARCHAR},
+      seeker_password = #{seekerPassword,jdbcType=VARCHAR},
+      seeker_age = #{seekerAge,jdbcType=INTEGER},
+      seeker_years = #{seekerYears,jdbcType=INTEGER},
+      seeker_educ = #{seekerEduc,jdbcType=VARCHAR},
+      seeker_language = #{seekerLanguage,jdbcType=CHAR},
+      seeker_gender = #{seekerGender,jdbcType=TINYINT}
+    where seeker_id = #{seekerId,jdbcType=INTEGER}
+  </update>
+</mapper>

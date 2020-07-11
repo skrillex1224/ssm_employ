@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tjpu.employ.dao.HireInfoMapper">
+  <cache
+          type="com.tjpu.employ.utils.cache.RedisCache"
+          eviction="LRU"
+          size="2048"
+          readOnly="false"
+  />
+
+<!--  HireInfo selectByIdWithEnterprise(Integer id);-->
+  <select id="selectByIdWithEnterprise" resultMap="dynamicSelectMap">
+      select h.*,e.* from hire_info h , enterprise e where  e.enter_id = h.enter_id
+      and h.hire_id = #{id}
+  </select>
+
+
+<!--   List<HireInfo> selectFilterBySalaryYearsAndEducation(HireInfo hireInfo);-->
+  <select id="selectFilterBySalaryYearsAndEducation" resultMap="dynamicSelectMap">
+         select h.*,e.* from hire_info h join enterprise e on e.enter_id = h.enter_id
+         <where>
+           <if test="hireYears != 0">
+             and hire_years >= #{hireYears}
+           </if>
+           <if test="hireSalary != 0">
+             and hire_salary >= #{hireSalary}
+           </if>
+           <if test="hireEducation != '无要求'">
+             and hire_education = #{hireEducation}
+            </if>
+
+            and hire_occupation = #{hireOccupation}
+         </where>
+  </select>
+
+<!--HireInfo selectByHireIdWithJobSeeker(Integer hireId);-->
+  <resultMap id="hireSeekerCollectionMap" type="com.tjpu.employ.beans.HireInfo">
+    <id column="hire_id" jdbcType="INTEGER" property="hireId" />
+    <result column="hire_salary" jdbcType="BIGINT" property="hireSalary" />
+    <result column="hire_years" jdbcType="INTEGER" property="hireYears" />
+    <result column="hire_education" jdbcType="VARCHAR" property="hireEducation" />
+    <result column="hire_language" jdbcType="CHAR" property="hireLanguage" />
+    <result column="hire_occupation" jdbcType="VARCHAR" property="hireOccupation" />
+    <collection property="seekHireInfos" ofType="com.tjpu.employ.beans.SeekHireInfo">
+      <result column="seeker_id" property="seekerId"></result>
+      <result column="hire_id" property="hireId"></result>
+      <result column="process_status" property="processStatus"></result>
+      <result column="order_interview_time" property="orderInterviewTime"></result>
+      <result column="interview_result" property="interviewResult"></result>
+    </collection>
+    <collection property="jobSeekers" ofType="com.tjpu.employ.beans.JobSeeker">
+      <id column="seeker_id" jdbcType="INTEGER" property="seekerId" />
+      <result column="seeker_name" jdbcType="VARCHAR" property="seekerName" />
+      <result column="seeker_email" jdbcType="VARCHAR" property="seekerEmail" />
+      <result column="seeker_password" jdbcType="VARCHAR" property="seekerPassword" />
+      <result column="seeker_age" jdbcType="INTEGER" property="seekerAge" />
+      <result column="seeker_years" jdbcType="INTEGER" property="seekerYears" />
+      <result column="seeker_educ" jdbcType="VARCHAR" property="seekerEduc" />
+      <result column="seeker_language" jdbcType="CHAR" property="seekerLanguage" />
+      <result column="seeker_gender" jdbcType="TINYINT" property="seekerGender" />
+      <result column="seeker_resume" property="seekerResume"  typeHandler="org.apache.ibatis.type.BlobTypeHandler"/>
+    </collection>
+  </resultMap>
+
+  <select id="selectByHireIdWithJobSeeker" resultMap="hireSeekerCollectionMap">
+        select h.*,js.*,shi.* from hire_info h
+       left join seeker_hire_info shi on h.hire_id = shi.hire_id
+       left join job_seeker js on shi.seeker_id = js.seeker_id where h.hire_id =#{hireId}
+  </select>
+
+
+
+
+
+<!--    List<HireInfo> selectByDynamic(HireInfo hireInfo);-->
+  <resultMap id="dynamicSelectMap" type="com.tjpu.employ.beans.HireInfo">
+    <id column="hire_id" jdbcType="INTEGER" property="hireId" />
+    <result column="hire_salary" jdbcType="BIGINT" property="hireSalary" />
+    <result column="hire_years" jdbcType="INTEGER" property="hireYears" />
+    <result column="hire_education" jdbcType="VARCHAR" property="hireEducation" />
+    <result column="hire_language" jdbcType="CHAR" property="hireLanguage" />
+    <result column="hire_occupation" jdbcType="VARCHAR" property="hireOccupation" />
+    <association property="enterprise" javaType="com.tjpu.employ.beans.Enterprise">
+      <id column="enter_id" property="enterId"></id>
+      <result column="enter_name" property="enterName"></result>
+      <result column="enter_email" property="enterEmail"></result>
+      <result column="enter_password" property="enterPassword"></result>
+      <result column="enter_username" property="enterUsername"></result>
+      <result column="enter_type" property="enterType"></result>
+      <result column="enter_info" property="enterInfo"></result>
+      <result column="enter_location" property="enterLocation"></result>
+      <result column="enter_phone" property="enterPhone"></result>
+    </association>
+  </resultMap>
+
+  <select id="selectByDynamic" resultMap="dynamicSelectMap">
+     select h.*,e.* from hire_info h join enterprise e on e.enter_id = h.enter_id
+     <where>
+       <if test="hireSalary != null">
+         and hire_salary = #{hireSalary}
+       </if>
+       <if test="hireYears != null">
+         and hire_years >= #{hireYears}
+       </if>
+       <if test="hireEducation != null">
+         and hire_education IN
+         <trim prefix="(" suffix=")">
+           <choose>
+             <when test="hireEducation == '博士学位'">
+               '博士学位','研究生','大学本科','大学专科'
+             </when>
+             <when test="hireEducation == '研究生'">
+               '研究生','大学本科','大学专科'
+             </when>
+             <when test="hireEducation == '大学本科'">
+               '大学本科','大学专科'
+             </when>
+             <otherwise>
+               '大学专科'
+             </otherwise>
+           </choose>
+         </trim>
+       </if>
+       <if test="hireOccupation != null">
+         and hire_occupation = #{hireOccupation}
+       </if>
+       <if test="hireLanguage != null">
+         and hire_language = #{hireLanguage}
+       </if>
+     </where>
+  </select>
+  
+  
+  
+  
+<!-- ######################################## -->
+  
+  
+  <resultMap id="BaseResultMap" type="com.tjpu.employ.beans.HireInfo">
+    <id column="hire_id" jdbcType="INTEGER" property="hireId" />
+    <result column="hire_salary" jdbcType="BIGINT" property="hireSalary" />
+    <result column="hire_years" jdbcType="INTEGER" property="hireYears" />
+    <result column="hire_education" jdbcType="VARCHAR" property="hireEducation" />
+    <result column="hire_language" jdbcType="CHAR" property="hireLanguage" />
+    <result column="hire_occupation" jdbcType="VARCHAR" property="hireOccupation" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    hire_id, hire_salary, hire_years, hire_education, hire_language, hire_occupation
+  </sql>
+  <select id="selectByExample" parameterType="com.tjpu.employ.beans.HireInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from hire_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from hire_info
+    where hire_id = #{hireId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from hire_info
+    where hire_id = #{hireId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tjpu.employ.beans.HireInfoExample">
+    delete from hire_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tjpu.employ.beans.HireInfo">
+    insert into hire_info (hire_id, hire_salary, hire_years, 
+      hire_education, hire_language, hire_occupation
+      )
+    values (#{hireId,jdbcType=INTEGER}, #{hireSalary,jdbcType=BIGINT}, #{hireYears,jdbcType=INTEGER}, 
+      #{hireEducation,jdbcType=VARCHAR}, #{hireLanguage,jdbcType=CHAR}, #{hireOccupation,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tjpu.employ.beans.HireInfo">
+    insert into hire_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="hireId != null">
+        hire_id,
+      </if>
+      <if test="hireSalary != null">
+        hire_salary,
+      </if>
+      <if test="hireYears != null">
+        hire_years,
+      </if>
+      <if test="hireEducation != null">
+        hire_education,
+      </if>
+      <if test="hireLanguage != null">
+        hire_language,
+      </if>
+      <if test="hireOccupation != null">
+        hire_occupation,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="hireId != null">
+        #{hireId,jdbcType=INTEGER},
+      </if>
+      <if test="hireSalary != null">
+        #{hireSalary,jdbcType=BIGINT},
+      </if>
+      <if test="hireYears != null">
+        #{hireYears,jdbcType=INTEGER},
+      </if>
+      <if test="hireEducation != null">
+        #{hireEducation,jdbcType=VARCHAR},
+      </if>
+      <if test="hireLanguage != null">
+        #{hireLanguage,jdbcType=CHAR},
+      </if>
+      <if test="hireOccupation != null">
+        #{hireOccupation,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tjpu.employ.beans.HireInfoExample" resultType="java.lang.Long">
+    select count(*) from hire_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update hire_info
+    <set>
+      <if test="record.hireId != null">
+        hire_id = #{record.hireId,jdbcType=INTEGER},
+      </if>
+      <if test="record.hireSalary != null">
+        hire_salary = #{record.hireSalary,jdbcType=BIGINT},
+      </if>
+      <if test="record.hireYears != null">
+        hire_years = #{record.hireYears,jdbcType=INTEGER},
+      </if>
+      <if test="record.hireEducation != null">
+        hire_education = #{record.hireEducation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hireLanguage != null">
+        hire_language = #{record.hireLanguage,jdbcType=CHAR},
+      </if>
+      <if test="record.hireOccupation != null">
+        hire_occupation = #{record.hireOccupation,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update hire_info
+    set hire_id = #{record.hireId,jdbcType=INTEGER},
+      hire_salary = #{record.hireSalary,jdbcType=BIGINT},
+      hire_years = #{record.hireYears,jdbcType=INTEGER},
+      hire_education = #{record.hireEducation,jdbcType=VARCHAR},
+      hire_language = #{record.hireLanguage,jdbcType=CHAR},
+      hire_occupation = #{record.hireOccupation,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tjpu.employ.beans.HireInfo">
+    update hire_info
+    <set>
+      <if test="hireSalary != null">
+        hire_salary = #{hireSalary,jdbcType=BIGINT},
+      </if>
+      <if test="hireYears != null">
+        hire_years = #{hireYears,jdbcType=INTEGER},
+      </if>
+      <if test="hireEducation != null">
+        hire_education = #{hireEducation,jdbcType=VARCHAR},
+      </if>
+      <if test="hireLanguage != null">
+        hire_language = #{hireLanguage,jdbcType=CHAR},
+      </if>
+      <if test="hireOccupation != null">
+        hire_occupation = #{hireOccupation,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where hire_id = #{hireId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tjpu.employ.beans.HireInfo">
+    update hire_info
+    set hire_salary = #{hireSalary,jdbcType=BIGINT},
+      hire_years = #{hireYears,jdbcType=INTEGER},
+      hire_education = #{hireEducation,jdbcType=VARCHAR},
+      hire_language = #{hireLanguage,jdbcType=CHAR},
+      hire_occupation = #{hireOccupation,jdbcType=VARCHAR}
+    where hire_id = #{hireId,jdbcType=INTEGER}
+  </update>
+</mapper>

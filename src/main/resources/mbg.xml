@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC
+        "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+
+    <context id="context" targetRuntime="MyBatis3">
+        <commentGenerator>
+            <property name="suppressDate" value="true"/>
+            <property name="suppressAllComments" value="true" />
+        </commentGenerator>
+
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                          connectionURL="jdbc:mysql://192.168.59.130:3306/ssm_employ"
+                         userId="root"
+                        password="fjh19991207fjh"/>
+
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+
+<!--        javaBean放的位置-->
+        <javaModelGenerator targetPackage="com.tjpu.employ.beans"
+                            targetProject="src/main/java">
+            <property name="enableSubPackages" value="false"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+<!--        xml文件配置-->
+        <sqlMapGenerator targetPackage="mapper"
+                        targetProject="src/main/resources">
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+
+<!--        mapper接口配置-->
+        <javaClientGenerator targetPackage="com.tjpu.employ.dao"
+                             targetProject="src/main/java" type="XMLMAPPER">
+            <property name="enableSubPackages" value="false"/>
+        </javaClientGenerator>
+
+        <table tableName="admin" domainObjectName="Admin"></table>
+        <table tableName="enterprise" domainObjectName="Enterprise"></table>
+        <table tableName="hire_info" domainObjectName="HireInfo"></table>
+        <table tableName="job_seeker" domainObjectName="JobSeeker"></table>
+
+
+    </context>
+</generatorConfiguration>
+
+
+
+
+
+
+
+
+
+
+
+
+
