@@ -24,22 +24,16 @@ public class ElasticsearchController {
 	
 	/***elasticsearch检索*/
 	//主页搜索
-	@ResponseBody
 	@RequestMapping("/elasticsearch")
-	public String searchOccupationOrEnterprise(@RequestParam(value = "pn",defaultValue = "1") Integer pn,
+	public String searchOccupationOrEnterprise(@RequestParam("searchParam") String searchParam,
+		@RequestParam(value = "pn",defaultValue = "1") Integer pn,
 	                                           Map<String, Object> map) {
 		
-		ApplicationContext ioc = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
-		SearchRepository searchRepository = ioc.getBean(SearchRepository.class);
-		PageRequest pageRequest = new PageRequest(1,50);
-		Page<Search> ceshi = searchRepository.search(new QueryStringQueryBuilder("架构"),pageRequest);
+	
 		
-		for (Search search : ceshi) {
-			System.out.println(search);
-		}
-		
-//		Page<Search> searches = elasticsearchService.contentMatch(searchParam, pn);
-//		map.put("search",searches);
+		Page<Search> searches = elasticsearchService.contentMatch(searchParam, pn);
+		map.put("search",searches);
+		map.put("searchParam",searchParam);
 		
 		return "findJob/searchResult";
 	}

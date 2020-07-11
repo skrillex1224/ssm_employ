@@ -43,6 +43,12 @@ public class Search implements Serializable {
 	@Field(type = FieldType.Integer)
 	private Integer hireYears;
 	
+	@Field(type = FieldType.Integer)
+	private Integer enterId;
+	
+	@Field(type = FieldType.Integer)
+	private Integer hireId;
+	
 	@Field(type = FieldType.String,analyzer = "ik_smart")
 	private String hireEducation;
 	
@@ -51,7 +57,6 @@ public class Search implements Serializable {
 	
 	@Field(type = FieldType.String,analyzer = "ik_smart")
 	private String hireOccupation;
-	
 	
 	@Override
 	public String toString() {
@@ -67,10 +72,29 @@ public class Search implements Serializable {
 			", enterPassword='" + enterPassword + '\'' +
 			", hireSalary=" + hireSalary +
 			", hireYears=" + hireYears +
+			", enterId=" + enterId +
+			", hireId=" + hireId +
 			", hireEducation='" + hireEducation + '\'' +
 			", hireLanguage='" + hireLanguage + '\'' +
 			", hireOccupation='" + hireOccupation + '\'' +
 			'}';
+	}
+	
+	public Integer getHireId() {
+		return hireId;
+	}
+	
+	public void setHireId(Integer hireId) {
+		this.hireId = hireId;
+	}
+	
+	
+	public Integer getEnterId() {
+		return enterId;
+	}
+	
+	public void setEnterId(Integer enterId) {
+		this.enterId = enterId;
 	}
 	
 	public String getId() {
