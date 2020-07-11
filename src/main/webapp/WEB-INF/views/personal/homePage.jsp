@@ -44,16 +44,14 @@
                         <br><br>
                                        <c:forEach items="${info.seekHireInfos}" var="tmp" varStatus="status">
                                                <c:choose>
-                                                       <c:when test="${tmp != null && info.hireInfos.size() > 0}">
+                                                       <c:when test="${tmp != null && info.hireInfos.size() > status.index}">
                                                                面试公司:${info.hireInfos.get(status.index).enterprise.enterName}<br>
                                                                面试进度:${tmp.processStatus}<br>
                                                                预约面试时间:<fmt:formatDate value="${tmp.orderInterviewTime}" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate> <br>
                                                                面试结果:${tmp.interviewResult} <br>
                                                                <br><br>
                                                        </c:when>
-                                                       <c:otherwise>
-                                                               您目前没有参加任何面试哦
-                                                       </c:otherwise>
+                                                       <c:when test="${tmp == null}">您暂时还没有任何面试哦~</c:when>
                                                </c:choose>
 
                                        </c:forEach>
