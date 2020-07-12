@@ -83,10 +83,15 @@ public class LoginController {
 
 	@RequestMapping("emailVerify")
 	@ResponseBody
-	public boolean verify(String seekerEmail) throws InterruptedException {
+	public String verify(String seekerEmail)  {
 		
 		boolean result = loginService.findSeekerEmail(seekerEmail);
-		return result;
+		System.out.println(result);
+		if (result){
+			return "true";
+		} else {
+			return "false";
+		}
 	}
 }
 
