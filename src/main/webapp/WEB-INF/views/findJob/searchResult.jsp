@@ -209,10 +209,17 @@
                         </c:otherwise>
                 </c:choose>
 
-
 </ul>
 </body>
 <script>
-        document.querySelector("#navagitor");
+       var nav = document.querySelector("#navagitor");
+       var body = document.querySelector("body");
+       var liNodes = document.querySelectorAll("#navagitor > li");
+       var len = 0;
+       for (var i = 0; i < liNodes.length; i++) {
+           len += liNodes[i].clientWidth;
+       }
+
+       nav.style.marginLeft = (body.offsetWidth - len)/2;
 </script>
 </html>
