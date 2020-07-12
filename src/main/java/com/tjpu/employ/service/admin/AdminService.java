@@ -20,4 +20,6 @@ public interface AdminService {
 	
 	void updateHireInfo(HireInfo hireInfo);
 	
+	List<byte[]> selectAllFace();
+	
 }

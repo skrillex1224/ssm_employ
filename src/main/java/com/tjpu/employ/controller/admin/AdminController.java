@@ -20,13 +20,8 @@ public class AdminController {
 	AdminService adminService;
 	
 	@RequestMapping("/getAllUsers")
-	public String getAllUser(@RequestParam(value = "email",defaultValue = "notExist")String dbName,
-	                         @RequestParam(value = "password",defaultValue = "notExist")String dbPwd,
-	                         Map<String,Object> map,
-	                         HttpSession session){
-		 if(adminService.confirmIdentity(dbName, dbPwd)){
-		 	session.setAttribute("token","token");
-		 }
+	public String getAllUser(Map<String,Object> map, HttpSession session){
+		session.setAttribute("token","token");
 		
 		List<List<? extends Serializable>> allUsers = adminService.findAllUsers();
 		map.put("allUsers",allUsers);

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -69,7 +70,16 @@ public class AdminServiceImpl implements AdminService {
 		return Arrays.asList(enterprises,jobSeekers);
 	}
 	
-	
+	//返回所有人脸数据
+	@Override
+	public List<byte[]> selectAllFace() {
+		List<Admin> list = adminMapper.selectByExampleWithBLOBs(null);
+		List<byte[]> faces = new ArrayList<>();
+		for (int i = 0; i < list.size(); i++) {
+			faces.add(list.get(i).getDbFace());
+		}
+		return faces;
+	}
 }
 
 

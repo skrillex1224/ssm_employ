@@ -447,26 +447,8 @@
         <shiro:hasRole name="admin">
         <div style="background-color: white;height: 100%;font-family: 'KaiTi';font-weight: bold;">
                 <c:if test="${sessionScope.token != 'token'}">
-                <h1 style="font-family: 'kaiTi';font-weight: bolder;text-align: center;padding:60px 0 40px 0 ;" >二次验证</h1>
-                <form id="adminForm" action="<%=request.getContextPath()%>/getAllUsers">
-                                <div class="form-group"  style="width: 60%;position:relative;left: 25%">
-                                        <label for="inputEmail3" class="col-sm-2 control-label">Email:</label>
-                                        <div class="col-sm-10">
-                                                <input type="email" name="email" class="form-control" id="inputEmail3" placeholder="Email">
-                                        </div>
-                                </div>
-                                <div class="form-group"  style="width: 60%;position:relative;left: 25%">
-                                        <label for="inputPassword3" class="col-sm-2 control-label">Password:</label>
-                                        <div class="col-sm-10">
-                                                <input type="password" name="password" class="form-control" id="inputPassword3" placeholder="Password">
-                                        </div>
-                                </div>
-                                <div class="form-group">
-                                        <div class="col-sm-offset-2 col-sm-10" style="width: 50%;position:relative;left: 25%;margin-top: 40px">
-                                                <button type="submit" class="btn btn-primary btn-lg btn-block">验证</button>
-                                        </div>
-                                </div>
-                </form>
+                        <jsp:include page="WEB-INF/views/face/faceDetect.jsp"></jsp:include>
+
                 </c:if>
                 <c:if test="${sessionScope.token == 'token'}">
                 <h1 style="font-family: 'kaiTi';font-weight: bolder;text-align: center;padding:20px 0 ;" >管理员用户管理界面</h1>
