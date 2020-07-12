@@ -130,7 +130,8 @@
                                 <label for="exampleFormControlTextarea1">公司简介</label>
                                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                         </div>
-                        <input name="enterInfo" type="submit" class="btn btn-outline-success col-2" value="提交">
+                        <input name="enterInfo" id="submit" type="submit" class="btn btn-outline-success col-2" value="提交">
+                        <span class="alert alert-danger" id="alertSpan" role="alert" style="margin-left: 50px;display: none;">两次密码输入不一致</span>
                 </form>
         </div>
 </div>
@@ -153,5 +154,20 @@
 </form>--%>
 
 </body>
+<script>
+        var submit =document.querySelector("#submit");
+        var input1 = document.querySelector("#inputPassword2");
+        var input2 = document.querySelector("#inputPassword");
+        var alertSpan = document.querySelector("#alertSpan");
+        submit.onclick = function () {
+            if(input1.value !=  input2.value){
+                alertSpan.style.display = "inline";
+                return false;
+            }
+
+        }
+
+
+</script>
 </html>
 
