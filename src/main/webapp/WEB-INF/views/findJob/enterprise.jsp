@@ -15,6 +15,14 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/static/UI/css/layui.css ">
         <script type="text/javascript" src="${pageContext.request.contextPath}/static/UI/layui.js"></script>
         <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+        <style>
+                a.ashow{
+                        font-family: "等线 Light";
+                        font-size: 16px;
+                        text-decoration:none;!important;
+                }
+                a.ashow:hover{text-decoration:none;color: cornflowerblue;!important;}
+        </style>
 </head>
 <body>
         <jsp:include page="../headerPage/publicPage.jsp"></jsp:include>
@@ -22,48 +30,48 @@
                 <table class="layui-table" lay-skin="nob">
                         <thead>
                                 <tr>
-                                        <th colspan="10">公司概览</th>
+                                        <th colspan="10" style="font-size: 20px;">公司概览</th>
                                 </tr>
 
                         </thead>
                         <tr>
-                                <td style="font-weight: bolder">公司地点</td>
-                                <td><a href="searchEnterpriseByLocation?location=北京市" class="selected">北京</a></td>
-                                <td><a href="searchEnterpriseByLocation?location=上海市">上海</a></td>
-                                <td><a href="searchEnterpriseByLocation?location=杭州市">杭州</a></td>
-                                <td><a href="searchEnterpriseByLocation?location=大连市">大连</a></td>
-                                <td><a href="searchEnterpriseByLocation?location=天津市">天津</a></td>
-                                <td><a href="searchEnterpriseByLocation?location=武汉市">武汉</a></td>
-                                <td><a href="searchEnterpriseByLocation?location=西安市">西安</a></td>
-                                <td><a href="searchEnterpriseByLocation?location=厦门市">厦门</a></td>
-                                <td><a href="searchEnterpriseByLocation?location=苏州市">苏州</a></td>
+                                <td style="font-weight: bolder;">公司地点</td>
+                                <td><a href="searchEnterpriseByLocation?location=北京市" class="ashow">北京</a></td>
+                                <td><a href="searchEnterpriseByLocation?location=上海市" class="ashow">上海</a></td>
+                                <td><a href="searchEnterpriseByLocation?location=杭州市" class="ashow">杭州</a></td>
+                                <td><a href="searchEnterpriseByLocation?location=大连市" class="ashow">大连</a></td>
+                                <td><a href="searchEnterpriseByLocation?location=天津市" class="ashow">天津</a></td>
+                                <td><a href="searchEnterpriseByLocation?location=武汉市" class="ashow">武汉</a></td>
+                                <td><a href="searchEnterpriseByLocation?location=西安市" class="ashow">西安</a></td>
+                                <td><a href="searchEnterpriseByLocation?location=厦门市" class="ashow">厦门</a></td>
+                                <td><a href="searchEnterpriseByLocation?location=苏州市" class="ashow">苏州</a></td>
                         </tr>
 
                         <tr>
                                 <td style="font-weight: bolder">行业类型</td>
-                                <td><a href="searchAllEnterprises">不限</a></td>
-                                <td><a href="searchEnterpriseByType?type=IT">IT</a></td>
-                                <td><a href="searchEnterpriseByType?type=电子商务">电子商务</a></td>
-                                <td><a href="searchEnterpriseByType?type=游戏">游戏</a></td>
-                                <td><a href="searchEnterpriseByType?type=保险">保险</a></td>
-                                <td><a href="#">广告营销</a></td>
-                                <td><a href="searchEnterpriseByType?type=网络安全">网络安全</a></td>
-                                <td><a href="#">旅游</a></td>
-                                <td><a href="#">商业</a></td>
+                                <td><a href="searchAllEnterprises" class="ashow">不限</a></td>
+                                <td><a href="searchEnterpriseByType?type=IT" class="ashow">IT</a></td>
+                                <td><a href="searchEnterpriseByType?type=电子商务" class="ashow">电子商务</a></td>
+                                <td><a href="searchEnterpriseByType?type=游戏" class="ashow">游戏</a></td>
+                                <td><a href="searchEnterpriseByType?type=保险" class="ashow">保险</a></td>
+                                <td><a href="#" class="ashow">广告营销</a></td>
+                                <td><a href="searchEnterpriseByType?type=网络安全" class="ashow">网络安全</a></td>
+                                <td><a href="#" class="ashow">旅游</a></td>
+                                <td><a href="#" class="ashow">商业</a></td>
 
                         </tr>
 
-                        <tr aria-rowspan="2">
-                                <td><a href="#"></a></td>
-                                <td><a href="#">移动互联网</a></td>
-                                <td><a href="#">信息安全</a></td>
-                                <td><a href="#">智能硬件</a></td>
-                                <td><a href="#">大数据</a></td>
-                                <td><a href="#">人工智能</a></td>
-                                <td><a href="#">汽车服务</a></td>
-                                <td><a href="#">前端服务</a></td>
-                                <td><a href="#">通信网络设备</a></td>
-                                <td><a href="#">互联网金融</a></td>
+                        <tr aria-rowspan="2" class="ashow">
+                                <td><a href="#" class="ashow"></a></td>
+                                <td><a href="#" class="ashow">移动互联网</a></td>
+                                <td><a href="#" class="ashow">信息安全</a></td>
+                                <td><a href="#" class="ashow">智能硬件</a></td>
+                                <td><a href="#" class="ashow">大数据</a></td>
+                                <td><a href="#" class="ashow">人工智能</a></td>
+                                <td><a href="#" class="ashow">汽车服务</a></td>
+                                <td><a href="#" class="ashow">前端服务</a></td>
+                                <td><a href="#" class="ashow">通信网络设备</a></td>
+                                <td><a href="#" class="ashow">互联网金融</a></td>
                         </tr>
                 </table>
 
@@ -75,8 +83,8 @@
                 %>
 
                 <div style="margin-bottom: 20px;margin-top: 20px">
-                        <span style="color: #48C2B3;">根据求职期望        </span><span>推荐</span>
-                        <span style="float: right">共<%=list.size()%>+公司</span>
+                        <span style="color: #48C2B3;font-family: '等线 Light';font-size: 16px;">根据求职期望 推荐</span>
+                        <span style="float: right;font-family: '等线 Light';font-size: 16px;">共<%=list.size()%>+公司</span>
                 </div>
 
                 <%
@@ -94,7 +102,7 @@
                                     <span style="float: right;padding-top: 30px;padding-right: 30px">
                                             <a href="searchHireInfoByEnterName?enterName=<%=list.get(k).getEnterName()%>" style="color: #1b1e21;font-family: 楷体;font-weight: bolder;font-size: large"><%=list.get(k).getEnterName()%></a>
                                             <br><br>
-                                            <span><%=list.get(k).getEnterLocation()%> | <%=list.get(k++).getEnterType()%></span>
+                                            <span style="font-family: '等线 Light';font-size: 16px;"><%=list.get(k).getEnterLocation()%> | <%=list.get(k++).getEnterType()%></span>
                                     </span>
 
 

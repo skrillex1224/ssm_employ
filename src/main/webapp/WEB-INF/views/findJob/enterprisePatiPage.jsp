@@ -64,7 +64,7 @@
 <jsp:include page="../headerPage/publicPage.jsp"></jsp:include>
 <div class="o-title">企业信息</div>
 <!--企业信息表-->
-<table class="o-info">
+<table class="o-info shadow p-3 mb-5 bg-white rounded">
         <c:forEach items="${enterprise}" var="enter">
                 <tr>
                         <td class="o-tr1">企业账户</td>
@@ -97,8 +97,9 @@
 
 <%--<div style="margin-top:1%;margin-left: 55%; width:400px;height:40px;text-align: center;font-family: '等线 Light';font-size: 24px;">企业位置:${enterprise[0].enterLocation}</div>--%>
 <!--在招岗位表-->
-<div class="o-title"> 在招岗位 </div>
-<div class="o-table">
+
+<div class="o-table shadow p-3 mb-5 bg-white rounded">
+        <div class="o-title "> 在招岗位 </div>
         <table class="table table-hover" style="font-family: '等线 Light'">
                 <c:forEach var="now_it" items="${enterprise[0].hireInfos}">
                         <tr >

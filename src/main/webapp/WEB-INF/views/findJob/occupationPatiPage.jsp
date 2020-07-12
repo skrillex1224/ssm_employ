@@ -31,8 +31,8 @@
             font-family: '等线 Light';
             font-size: 18px;
             z-index: -2;
-            margin-left: 20%;
-            width: 60%;
+            /*margin-left: 20%;*/
+            width: 100%;
             border: 0px;
             /*background-color:#f9f0da;*/
             background-color: white;
@@ -66,8 +66,9 @@
 <body>
 <jsp:include page="../headerPage/publicPage.jsp"></jsp:include>
 <!--招聘信息具体查看-->
-<div class="o-title">招聘信息详情</div>
-    <div style="text-align: center;">
+<div class="o-title ">招聘信息详情</div>
+<div class="shadow p-3 mb-5 bg-white rounded" style="text-align: center;width: 60%;margin-left: 20%;">
+    <div style="text-align: center;" >
         <div class="o-table"><h2>${hireInfo.hireOccupation}</h2></div>
         <div class="o-table"><br>薪资${hireInfo.hireSalary}</div>
         <div class="o-table"><br>${hireInfo.hireLanguage}语言</div>
@@ -128,43 +129,42 @@
                             </div>
                         </form>
                     </div>
-
                 </div>
             </div>
         </div>
-    </div>
+<div class="o-title">公司信息</div>
+<table class="o-info">
+    <tr>
+        <td class="o-tr1">公司名称</td>
+        <td class="o-tr2"><a class="btn-11" style="text-align: center">${hireInfo.enterprise.enterName}</a></td>
+        <td style="padding-left:5%;text-align: center;font-size: 24px;">公司位置</td>
+    </tr>
+    <tr>
+        <td class="o-tr1">企业介绍</td>
+        <td class="o-tr1"><a class="btn-11" style="text-align: center">${hireInfo.enterprise.enterInfo}</a></td>
+        <td rowspan="5"><div style="margin-left:16%;width:400px;height:320px;border:#ccc solid 1px;" id="dituContent"></div></td>
+    </tr>
+    <tr>
+        <td class="o-tr1">法人代表</td>
+        <td class="o-tr1"><a class="btn-11" style="text-align: center">${hireInfo.enterprise.enterUsername}</a></td>
+    </tr>
+    <tr>
+        <td class="o-tr1">企业名称</td>
+        <td class="o-tr1"><a class="btn-11" style="text-align: center">${hireInfo.enterprise.enterName}</a></td>
+    </tr>
+    <tr>
+        <td class="o-tr1">联系电话</td>
+        <td class="o-tr1"><a class="btn-11" style="text-align: center">${hireInfo.enterprise.enterPhone}</a></td>
+    </tr>
+    <tr>
+        <td class="o-tr1">公司类型</td>
+        <td class="o-tr1"><a class="btn-11" style="text-align: center">${hireInfo.enterprise.enterType}</a></td>
+    </tr>
+</table>
 </div>
 
 <!--公司信息-->
-<div class="o-title">公司信息</div>
-<table class="o-info">
-        <tr>
-            <td class="o-tr1">公司名称</td>
-            <td class="o-tr2"><a class="btn-11" style="text-align: center">${hireInfo.enterprise.enterName}</a></td>
-            <td style="padding-left:5%;text-align: center;font-size: 24px;">公司位置</td>
-        </tr>
-        <tr>
-            <td class="o-tr1">企业介绍</td>
-            <td class="o-tr1"><a class="btn-11" style="text-align: center">${hireInfo.enterprise.enterInfo}</a></td>
-            <td rowspan="5"><div style="margin-left:16%;width:400px;height:320px;border:#ccc solid 1px;" id="dituContent"></div></td>
-        </tr>
-        <tr>
-            <td class="o-tr1">法人代表</td>
-            <td class="o-tr1"><a class="btn-11" style="text-align: center">${hireInfo.enterprise.enterUsername}</a></td>
-        </tr>
-        <tr>
-            <td class="o-tr1">企业名称</td>
-            <td class="o-tr1"><a class="btn-11" style="text-align: center">${hireInfo.enterprise.enterName}</a></td>
-        </tr>
-        <tr>
-            <td class="o-tr1">联系电话</td>
-            <td class="o-tr1"><a class="btn-11" style="text-align: center">${hireInfo.enterprise.enterPhone}</a></td>
-        </tr>
-        <tr>
-            <td class="o-tr1">公司类型</td>
-            <td class="o-tr1"><a class="btn-11" style="text-align: center">${hireInfo.enterprise.enterType}</a></td>
-        </tr>
-</table>
+
 <div style="height: 100px;"></div>
 </body>
 
