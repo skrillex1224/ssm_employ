@@ -110,19 +110,19 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title" id="myModalLabel">发送电子邮件</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     </div>
                     <%--                                        模态框内容,可以往这里加点样式--%>
-                    <div class="modal-body">
+                    <div class="modal-body" style="width: 70%;margin-left: 15%;font-weight: bold;font-family: 'kaiti'">
                         <form action="${pageContext.request.contextPath}/sendEmail">
-                            邮箱: <input type="email" name="email" value="<shiro:principal />" />
-                            密码: <input type="password" name="pwd" /> <!--密码:tmsyvdgmbumjbffa-->
-                            标题:<input type="text" name="subject" />
-                            收件人: <input type="email" name="receiver" value="${hireInfo.enterprise.enterEmail}">
+                            <span>邮箱:</span> <input  class="form-control" type="email" name="email" value="<shiro:principal />" />
+                            <span>密码:</span> <input  class="form-control" type="password" name="pwd" /> <!--密码:tmsyvdgmbumjbffa-->
+                            <span>标题:</span><input  class="form-control" type="text" name="subject" />
+                            <span>收件人:</span> <input  class="form-control" type="email" name="receiver" value="${hireInfo.enterprise.enterEmail}">
 
                             发送内容：<br>
-                            <textarea  name="content" rows="5" cols="35" style="font-size: 30px"></textarea>
+                            <textarea class="form-control"  name="content" rows="5" cols="35" style="font-size: 30px"></textarea>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                                 <button type="submit" class="btn btn-primary">发送</button>

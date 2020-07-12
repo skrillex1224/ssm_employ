@@ -11,7 +11,6 @@ import java.util.concurrent.locks.ReadWriteLock;
 // -v /root/docker/myredis/conf/redis.conf:/usr/local/etc/redis/redis.conf
 // -d redis redis-server /usr/local/etc/redis/redis.conf --appendonly yes
 
-//172.17.0.1
 public class RedisCache implements Cache {
 	
 	private static RedisTemplate masterObjectTemplate;

@@ -48,7 +48,7 @@
      </collection>
   </resultMap>
 
-  <select id="selectBySeekerEmail" resultMap="SeekerInterviewInfosMap">
+  <select id="selectBySeekerEmail" resultMap="SeekerInterviewInfosMap" flushCache="true">
     select js.*,shi.*,hi.*,e.*
     from job_seeker js left join seeker_hire_info shi on js.seeker_id = shi.seeker_id
     left join hire_info hi on shi.hire_id = hi.hire_id

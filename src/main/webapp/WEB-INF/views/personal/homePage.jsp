@@ -122,7 +122,7 @@
                 </div>
                 <div class="form-row">
                         <div class="form-group col-md-6">
-                                <label style="display: none">Seekerresume</label>
+                                <label style="display: none">SeekerResume:</label>
                                 <input style="display: none" class="toggleResume"  type="file" name="resume" value="${info.seekerResume}"  disabled="disabled"/>
                         </div>
                         <div class="form-group col-md-6">
@@ -164,7 +164,7 @@
                                         <c:when test="${tmp != null && info.hireInfos.size() > 0}">
                                                 <table class="table table-hover">
                                                         <tr>
-                                                                <td>面试公司:</td>
+                                                                <td><em>面试公司:</em></td>
                                                                 <td>${info.hireInfos.get(status.index).enterprise.enterName}</td>
                                                         </tr>
                                                         <tr>
@@ -174,7 +174,13 @@
                                                         <tr>
                                                                 <td>预约面试时间:</td>
                                                                 <td>
-                                                                        <fmt:formatDate value="${tmp.orderInterviewTime}" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate>
+
+                                                                        <c:if test="${tmp.orderInterviewTime == '' } ">
+                                                                                <fmt:formatDate value="${tmp.orderInterviewTime}" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate>
+                                                                        </c:if>
+                                                                        <c:if test="${tmp.orderInterviewTime != '' }">
+                                                                                暂无面试
+                                                                        </c:if>
                                                                 </td>
                                                         </tr>
                                                         <tr>
