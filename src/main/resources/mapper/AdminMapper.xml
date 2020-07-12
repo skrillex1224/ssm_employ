@@ -82,7 +82,7 @@
   <sql id="Blob_Column_List">
     db_face
   </sql>
-  <select id="selectByExampleWithBLOBs" parameterType="com.tjpu.employ.beans.AdminExample" resultMap="ResultMapWithBLOBs">
+  <select flushCache="true" id="selectByExampleWithBLOBs" parameterType="com.tjpu.employ.beans.AdminExample" resultMap="ResultMapWithBLOBs">
     select
     <if test="distinct">
       distinct
@@ -98,7 +98,7 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" parameterType="com.tjpu.employ.beans.AdminExample" resultMap="BaseResultMap">
+  <select flushCache="true" id="selectByExample" parameterType="com.tjpu.employ.beans.AdminExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct

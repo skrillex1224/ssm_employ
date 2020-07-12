@@ -18,14 +18,14 @@
   </insert>
 
 <!--  HireInfo selectByIdWithEnterprise(Integer id);-->
-  <select id="selectByIdWithEnterprise" resultMap="dynamicSelectMap">
+  <select flushCache="true" id="selectByIdWithEnterprise" resultMap="dynamicSelectMap">
       select h.*,e.* from hire_info h , enterprise e where  e.enter_id = h.enter_id
       and h.hire_id = #{id}
   </select>
 
 
 <!--   List<HireInfo> selectFilterBySalaryYearsAndEducation(HireInfo hireInfo);-->
-  <select id="selectFilterBySalaryYearsAndEducation" resultMap="dynamicSelectMap">
+  <select flushCache="true" id="selectFilterBySalaryYearsAndEducation" resultMap="dynamicSelectMap">
          select h.*,e.* from hire_info h join enterprise e on e.enter_id = h.enter_id
          <where>
            <if test="hireYears != 0">
@@ -71,7 +71,7 @@
     </collection>
   </resultMap>
 
-  <select id="selectByHireIdWithJobSeeker" resultMap="hireSeekerCollectionMap">
+  <select flushCache="true" id="selectByHireIdWithJobSeeker" resultMap="hireSeekerCollectionMap">
         select h.*,js.*,shi.* from hire_info h
        left join seeker_hire_info shi on h.hire_id = shi.hire_id
        left join job_seeker js on shi.seeker_id = js.seeker_id where h.hire_id =#{hireId}
@@ -102,7 +102,7 @@
     </association>
   </resultMap>
 
-  <select id="selectByDynamic" resultMap="dynamicSelectMap">
+  <select flushCache="true" id="selectByDynamic" resultMap="dynamicSelectMap">
      select h.*,e.* from hire_info h join enterprise e on e.enter_id = h.enter_id
      <where>
        <if test="hireSalary != null">
