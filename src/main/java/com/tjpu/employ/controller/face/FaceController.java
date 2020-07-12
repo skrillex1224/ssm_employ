@@ -18,7 +18,7 @@ public class FaceController {
     @Autowired
     AdminService adminService;
 
-    private String token = "24.d25e159a53cfa029e6b1495d01c4b631.2592000.1596593511.282335-21147152";
+    private static  String token = "24.d25e159a53cfa029e6b1495d01c4b631.2592000.1596593511.282335-21147152";
 
     @RequestMapping("showToken")
     @ResponseBody
@@ -50,18 +50,16 @@ public class FaceController {
     public Double func4(String imgData){
         String img1 = imgData.substring(22);
         List<byte[]> faces = adminService.selectAllFace();
+        System.out.println(faces);
         for (int i = 0; i < faces.size(); i++) {
             String img2 = Base64Util.encode(faces.get(i));
             String result = FaceUtil.faceMatch(token, img1, img2);
             JSONObject jsonObject = JSON.parseObject(result);
-            System.out.println(jsonObject.getJSONObject("result").getString("score")+"-----");
             double score = Double.parseDouble(jsonObject.getJSONObject("result").getString("score"));
             if (score > 85){
                 return score;
             }
         }
-        System.out.println(img1);
-        System.out.println("成功接收");
         return null;
     }
 }
