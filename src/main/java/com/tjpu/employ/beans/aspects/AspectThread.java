@@ -10,6 +10,6 @@ public class AspectThread {
 	@Before("execution(* com.tjpu.employ.service..*.*(..)) ")
 	public void sleepThread() throws InterruptedException {
 		//模拟网络
-		Thread.sleep(250);
+		Thread.sleep(400);
 	}
 }

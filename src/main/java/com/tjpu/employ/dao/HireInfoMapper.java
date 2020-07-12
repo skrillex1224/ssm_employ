@@ -10,10 +10,6 @@ import java.util.List;
 public interface HireInfoMapper {
     
     //插入一条招聘信息并关联公司
-    @Insert("insert into hire_info(hire_salary,hire_years,hire_education,hire_language" +
-            ",hire_occupation,enter_id)" +
-            "values(#{h.hireSalary},#{h.hireYears},#{h.hireEducation}," +
-            "#{h.hireLanguage},#{h.hireOccupation},#{enterId})")
     void insertWithEnterprise(@Param("h") HireInfo hireInfo, @Param("enterId") Integer enterId);
     
     

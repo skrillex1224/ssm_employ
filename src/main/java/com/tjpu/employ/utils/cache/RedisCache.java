@@ -72,7 +72,6 @@ public class RedisCache implements Cache {
 	
 	@Override
 	public Object removeObject(Object key) {
-		
 		final byte[] idBytes = id.getBytes();
 		return masterObjectTemplate.opsForHash().delete(idBytes,key.toString().getBytes());
 	}
@@ -80,7 +79,8 @@ public class RedisCache implements Cache {
 	@Override
 	public void clear() {
 		final byte[] idBytes = id.getBytes();
-		masterObjectTemplate.delete(idBytes);
+		masterObjectTemplate.delete(slaveObjectTempalte.keys("*"));
+		
 	}
 	
 	@Override

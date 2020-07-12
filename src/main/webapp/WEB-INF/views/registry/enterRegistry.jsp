@@ -68,20 +68,20 @@
                         <div class="form-group row">
                                 <label for="inputName" class="col-sm-3 col-form-label">企业名称</label>
                                 <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="inputName">
+                                        <input type="text" name="enterName" class="form-control" id="inputName">
                                 </div>
                         </div>
                         <div class="form-group row">
                                 <label for="staticEmail" class="col-sm-3 col-form-label">企业邮箱</label>
                                 <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="staticEmail" >
+                                        <input type="text" name="enterEmail" class="form-control" id="staticEmail" >
                                 </div>
                         </div>
                         <span class="msg"></span>
                         <div class="form-group row">
                                 <label for="inputPassword" class="col-sm-3 col-form-label">密码</label>
                                 <div class="col-sm-9">
-                                        <input type="password" class="form-control" id="inputPassword">
+                                        <input type="password" name="enterPassword" class="form-control" id="inputPassword">
                                 </div>
                         </div>
                         <div class="form-group row">
@@ -94,25 +94,25 @@
                         <div class="form-group row">
                                 <label for="inputEName" class="col-sm-3 col-form-label">法人姓名</label>
                                 <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="inputEName">
+                                        <input type="text" name="enterUsername" class="form-control" id="inputEName">
                                 </div>
                         </div>
                         <div class="form-group row">
                                 <label for="inputType" class="col-sm-3 col-form-label">公司类型</label>
                                 <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="inputType">
+                                        <input type="text" name="enterType" class="form-control" id="inputType">
                                 </div>
                         </div>
                         <div class="form-group row">
                                 <label for="inputAdress" class="col-sm-3 col-form-label">公司地址</label>
                                 <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="inputAdress">
+                                        <input type="text" name="enterLocation" class="form-control" id="inputAdress">
                                 </div>
                         </div>
                         <div class="form-group row">
                                 <label for="inputTel" class="col-sm-3 col-form-label">咨询电话</label>
                                 <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="inputTel">
+                                        <input type="text" name="enterPhone" class="form-control" id="inputTel">
                                 </div>
                         </div>
 
@@ -121,7 +121,7 @@
                                         <span class="input-group-text" id="inputGroupFileAddon01">上传公司图标</span>
                                 </div>
                                 <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="inputGroupFile01">
+                                        <input  type="file" name="icon" class="custom-file-input" id="inputGroupFile01">
                                         <label class="custom-file-label" for="inputGroupFile01">选择文件</label>
                                 </div>
                         </div>
@@ -130,7 +130,7 @@
                                 <label for="exampleFormControlTextarea1">公司简介</label>
                                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                         </div>
-                        <input type="submit" class="btn btn-outline-success col-2" value="提交">
+                        <input name="enterInfo" type="submit" class="btn btn-outline-success col-2" value="提交">
                 </form>
         </div>
 </div>

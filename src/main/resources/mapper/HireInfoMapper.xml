@@ -8,6 +8,15 @@
           readOnly="false"
   />
 
+
+<!--    void insertWithEnterprise(@Param("h") HireInfo hireInfo, @Param("enterId") Integer enterId);-->
+  <insert id="insertWithEnterprise">
+      insert into hire_info(hire_salary,hire_years,hire_education,hire_language,
+              hire_occupation,enter_id)
+              values(#{h.hireSalary},#{h.hireYears},#{h.hireEducation},
+              #{h.hireLanguage},#{h.hireOccupation},#{enterId})
+  </insert>
+
 <!--  HireInfo selectByIdWithEnterprise(Integer id);-->
   <select id="selectByIdWithEnterprise" resultMap="dynamicSelectMap">
       select h.*,e.* from hire_info h , enterprise e where  e.enter_id = h.enter_id

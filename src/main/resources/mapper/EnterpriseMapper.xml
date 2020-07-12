@@ -29,7 +29,7 @@
     </collection>
   </resultMap>
 
-  <select id="selectByNameWithHireInfo" resultMap="enterInfoMap" >
+  <select id="selectByNameWithHireInfo" resultMap="enterInfoMap" flushCache="true" >
     select e.*,h.* from enterprise e left
             join hire_info h on e.enter_id = h.enter_id
             <where>
