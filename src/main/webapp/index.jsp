@@ -449,7 +449,6 @@
                 <c:if test="${sessionScope.token != 'token'}">
                 <h1 style="font-family: 'kaiTi';font-weight: bolder;text-align: center;padding:60px 0 40px 0 ;" >二次验证</h1>
                 <form id="adminForm" action="<%=request.getContextPath()%>/getAllUsers">
-                        <form action="/getAllUsers" class="form-horizontal" >
                                 <div class="form-group"  style="width: 60%;position:relative;left: 25%">
                                         <label for="inputEmail3" class="col-sm-2 control-label">Email:</label>
                                         <div class="col-sm-10">
@@ -467,8 +466,6 @@
                                                 <button type="submit" class="btn btn-primary btn-lg btn-block">验证</button>
                                         </div>
                                 </div>
-                        </form>
-
                 </form>
                 </c:if>
                 <c:if test="${sessionScope.token == 'token'}">
@@ -653,7 +650,6 @@
                         <c:if test="${sessionScope.token != 'took'}">
                                 <h1 style="font-family: 'kaiTi';font-weight: bolder;text-align: center;padding:60px 0 40px 0 ;" >二次验证</h1>
                                 <form id="adminForm" action="<%=request.getContextPath()%>/showMyEnter">
-                                        <form action="/getAllUsers" class="form-horizontal" >
                                                 <div class="form-group"  style="width: 60%;position:relative;left: 25%">
                                                         <label for="inputEmail3" class="col-sm-2 control-label">Email:</label>
                                                         <div class="col-sm-10">
@@ -671,7 +667,6 @@
                                                                 <button type="submit" class="btn btn-primary btn-lg btn-block">验证</button>
                                                         </div>
                                                 </div>
-                                        </form>
 
                                 </form>
                         </c:if>

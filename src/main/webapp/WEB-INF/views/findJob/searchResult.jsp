@@ -143,7 +143,7 @@
         </c:forEach>
 </table>
 
-<ul class="pagination pagination-lg" style="margin-left: 18%">
+<ul id="navagitor" class="pagination pagination-lg">
 
                  <c:choose>
                          <c:when test="${search.first}">
@@ -164,7 +164,7 @@
                 </c:choose>
 
                 <c:choose>
-                        <c:when test="${search.number +8 >= search.totalPages}">
+                        <c:when test="${search.number +8 >= search.totalPages && search.totalPages >= 8}">
                                 <c:forEach begin="${search.totalPages -8}" end="${search.totalPages }" step="1" varStatus="status">
                                         <c:if test="${status.index == search.number +1}">
                                                 <li class="page-item active"><a class="page-link"  href="#">${status.index}</a></li>
@@ -176,7 +176,7 @@
                                 </c:forEach>
                         </c:when>
                         <c:otherwise>
-                                <c:forEach begin="${search.number +1}" end="${search.number + 9}" step="1" varStatus="status">
+                                <c:forEach begin="${search.number +1}" end="${search.number + 9 > search.totalPages ?search.totalPages : search.number + 9 }" step="1" varStatus="status">
                                         <c:if test="${search.number +1 == status.index}">
                                                 <li class="page-item active "><a class="page-link"  href="#">${status.index}</a></li>
                                         </c:if>
@@ -211,9 +211,8 @@
 
 
 </ul>
-
-
-
-
 </body>
+<script>
+        document.querySelector("#navagitor");
+</script>
 </html>
