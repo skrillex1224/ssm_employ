@@ -137,7 +137,7 @@
   <sql id="Blob_Column_List">
     seeker_resume
   </sql>
-  <select id="selectByExampleWithBLOBs" parameterType="com.tjpu.employ.beans.JobSeekerExample" resultMap="ResultMapWithBLOBs">
+  <select flushCache="true" id="selectByExampleWithBLOBs" parameterType="com.tjpu.employ.beans.JobSeekerExample" resultMap="ResultMapWithBLOBs">
     select
     <if test="distinct">
       distinct
@@ -153,7 +153,7 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" parameterType="com.tjpu.employ.beans.JobSeekerExample" resultMap="BaseResultMap">
+  <select flushCache="true" id="selectByExample" parameterType="com.tjpu.employ.beans.JobSeekerExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -167,7 +167,7 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+  <select flushCache="true" id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />
     ,
@@ -262,7 +262,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.tjpu.employ.beans.JobSeekerExample" resultType="java.lang.Long">
+  <select flushCache="true" id="countByExample" parameterType="com.tjpu.employ.beans.JobSeekerExample" resultType="java.lang.Long">
     select count(*) from job_seeker
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />

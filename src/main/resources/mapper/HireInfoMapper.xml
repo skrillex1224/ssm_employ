@@ -214,7 +214,7 @@
   <sql id="Base_Column_List">
     hire_id, hire_salary, hire_years, hire_education, hire_language, hire_occupation
   </sql>
-  <select id="selectByExample" parameterType="com.tjpu.employ.beans.HireInfoExample" resultMap="BaseResultMap">
+  <select flushCache="true" id="selectByExample" parameterType="com.tjpu.employ.beans.HireInfoExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -228,7 +228,7 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select flushCache="true" id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from hire_info
@@ -295,7 +295,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.tjpu.employ.beans.HireInfoExample" resultType="java.lang.Long">
+  <select flushCache="true" id="countByExample" parameterType="com.tjpu.employ.beans.HireInfoExample" resultType="java.lang.Long">
     select count(*) from hire_info
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
