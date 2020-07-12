@@ -174,7 +174,7 @@
 <!--    elasticSearch-->
     <elasticserach:repositories base-package="com.tjpu.employ.elasticsearch.repository"></elasticserach:repositories>
     <elasticserach:transport-client id="client" client-transport-sniff="false"
-            cluster-nodes="192.168.59.130:9300" cluster-name="elasticsearch"></elasticserach:transport-client>
+            cluster-nodes="${elasticsearch.cluster-nodes}" cluster-name="${elasticsearch.node-name}"></elasticserach:transport-client>
     <bean id="elasticsearchTemplate" class="org.springframework.data.elasticsearch.core.ElasticsearchTemplate">
         <constructor-arg name="client" ref="client"></constructor-arg>
     </bean>
