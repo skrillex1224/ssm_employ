@@ -204,6 +204,11 @@
 </div>
 
 </body>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="${pageContext.request.contextPath}/static/BUI/js/jquery-3.3.1.js"></script>
+<script src="${pageContext.request.contextPath}/static/BUI/js/proper.js"></script>
+<script src="${pageContext.request.contextPath}/static/BUI/bootstrap4.5/js/bootstrap.js"></script>
 <script>
         var edit = document.querySelector("#edit");
         var pwds = document.querySelectorAll("[type=\"password\"]");

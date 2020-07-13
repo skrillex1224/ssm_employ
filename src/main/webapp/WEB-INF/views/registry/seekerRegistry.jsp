@@ -77,7 +77,7 @@
                         <div class="form-group row">
                                 <label class="col-sm-3 col-form-label">密码</label>
                                 <div class="col-sm-9">
-                                        <input type="password" class="form-control" name="seekerPassword">
+                                        <input type="password" class="form-control" name="seekerPassword" id="seekerPassword">
                                 </div>
                         </div>
 
@@ -148,7 +148,7 @@
         //验证二次密码输入
 
         $("#btnSubmit").on("click",function () {
-            if ($(".seekerPassword").val() != $("#secondPassword").val() && $("#secondPassword").val() != null && $(".seekerPassword").val() != null) {
+            if ($("#seekerPassword").val() != $("#secondPassword").val() && $("#secondPassword").val() != null && $("#seekerPassword").val() != null) {
                 $("#alertSpan").css("display","inline");
                 return false;
             }
