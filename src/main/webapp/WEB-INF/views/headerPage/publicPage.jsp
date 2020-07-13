@@ -56,7 +56,7 @@
                     <a class="nav-link" href="<%=request.getContextPath()%>/enterprise">公司</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="https://www.proginn.com/">资讯</a>
+                    <a class="nav-link " href="#" style="color: grey" onclick="alert('开发中,敬请期待~')">资讯</a>
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="<%=request.getContextPath()%>/infos">关于</a>

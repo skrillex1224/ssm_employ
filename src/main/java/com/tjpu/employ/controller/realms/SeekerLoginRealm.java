@@ -12,6 +12,7 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashSet;
 
 @Component
@@ -74,7 +75,7 @@ public class SeekerLoginRealm extends AuthorizingRealm {
 		
 		try {
 			adminMapper.selectByExample(adminExample).get(0);
-			roles.add("admin");
+			roles.add("admin");             //requestContextHolder
 		} catch (Exception e) {
 			try {
 				enterpriseMapper.selectByExample(enterpriseExample).get(0);
