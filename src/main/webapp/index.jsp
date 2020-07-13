@@ -332,7 +332,7 @@
                                                                 <div class="card-infos">
                                                                         <h2 class="card__title"><a href="${pageContext.request.contextPath}/searchHireInfoByEnterName?enterName=华为">华为公司</a></h2>
                                                                         <p class="card__text">
-                                                                                君不见，黄河之水天上来，奔流到海不复回。
+                                                                                华为- 构建万物互联的智能世界
                                                                         </p>
                                                                 </div>
                                                         </div>
@@ -343,7 +343,7 @@
                                                                 <div class="card-infos">
                                                                         <h2 class="card__title"><a href="${pageContext.request.contextPath}/searchHireInfoByEnterName?enterName=腾讯">腾讯公司</a></h2>
                                                                         <p class="card__text">
-                                                                                君不见，高堂明镜悲白发，朝如青丝暮成雪。
+                                                                                腾讯是一家以互联网为基础的平台公司，通过技术丰富互联网用户的生活，助力企业数字化升级
                                                                         </p>
                                                                 </div>
                                                         </div>
@@ -354,7 +354,7 @@
                                                                 <div class="card-infos">
                                                                         <h2 class="card__title"><a href="${pageContext.request.contextPath}/searchHireInfoByEnterName?enterName=瓜子二手车">瓜子二手车</a></h2>
                                                                         <p class="card__text">
-                                                                                人生得意须尽欢，莫使金樽空对月。
+                                                                                全国二手车,急卖二手车,直面个人买家 好车卖出好价,瓜子二手车均经过259项检测,标准无事故,优质个人二手车
                                                                         </p>
                                                                 </div>
                                                         </div>
@@ -365,7 +365,7 @@
                                                                 <div class="card-infos">
                                                                         <h2 class="card__title"><a href="${pageContext.request.contextPath}/searchHireInfoByEnterName?enterName=字节跳动">字节跳动</a></h2>
                                                                         <p class="card__text">
-                                                                                天生我材必有用，千金散尽还复来。
+                                                                                最早将人工智能应用于移动互联网场景的科技企业之一，是中国北京的一家信息科技公司
                                                                         </p>
                                                                 </div>
                                                         </div>
@@ -376,7 +376,7 @@
                                                                 <div class="card-infos">
                                                                         <h2 class="card__title"><a href="${pageContext.request.contextPath}/searchHireInfoByEnterName?enterName=阿里">阿里巴巴</a></h2>
                                                                         <p class="card__text">
-                                                                                烹羊宰牛且为乐，会须一饮三百杯。
+                                                                                阿里巴巴集团经营多项业务，另外也从关联公司的业务和服务中取得经营商业生态系统上的支援。业务和关联公司的业务包括：淘宝网、天猫等
                                                                         </p>
                                                                 </div>
                                                         </div>
@@ -387,7 +387,7 @@
                                                                 <div class="card-infos">
                                                                         <h2 class="card__title"><a href="${pageContext.request.contextPath}/searchHireInfoByEnterName?enterName=网易">网易公司</a></h2>
                                                                         <p class="card__text">
-                                                                                岑夫子，丹丘生，将进酒，杯莫停。
+                                                                                本着对中国互联网发展强烈的使命感，缔造美好生活的愿景，网易利用最先进的互联网技术，加强人与人之间信息的交流和共享。
                                                                         </p>
                                                                 </div>
                                                         </div>
@@ -398,7 +398,7 @@
                                                                 <div class="card-infos">
                                                                         <h2 class="card__title"><a href="${pageContext.request.contextPath}/searchHireInfoByEnterName?enterName=百度">百度公司</a></h2>
                                                                         <p class="card__text">
-                                                                                月落乌啼霜满天，江枫渔火对愁眠。姑苏城外寒山寺，夜半钟声到客船。
+                                                                                百度是全球最大的中文搜索引擎，中国最大的以信息和知识为核心的互联网综合服务公司，全球领先的人工智能平台型公司。
                                                                         </p>
                                                                 </div>
                                                         </div>
@@ -409,7 +409,7 @@
                                                                 <div class="card-infos">
                                                                         <h2 class="card__title"><a href="${pageContext.request.contextPath}/searchHireInfoByEnterName?enterName=万达集团">万达集团</a></h2>
                                                                         <p class="card__text">
-                                                                                空山新雨后，天气晚来秋。明月松间照，清泉石上流。
+                                                                                万达是世界领先的不动产企业、世界领先的影视企业、世界领先的体育企业、世界领先的儿童产业企业。
                                                                         </p>
                                                                 </div>
                                                         </div>
@@ -421,7 +421,7 @@
                                                                 <div class="card-infos">
                                                                         <h2 class="card__title"><a href="${pageContext.request.contextPath}/searchHireInfoByEnterName?enterName=黻圆集团">黻圆集团</a></h2>
                                                                         <p class="card__text ">
-                                                                                长安一片月，万户捣衣声。秋风吹不尽，总是玉关情。
+                                                                                世界五百强顶尖级企业
                                                                         </p>
                                                                 </div>
                                                         </div>
