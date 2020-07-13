@@ -18,7 +18,8 @@ public class MailSenderController {
 		@RequestParam("pwd") final String pwd, //发件人密码tmsyvdgmbumjbffa
 		@RequestParam("receiver") String receiver, //接收人邮箱
 		@RequestParam("content") String content, //内容
- 		@RequestParam("subject") String subject //标题
+ 		@RequestParam("subject") String subject, //标题
+		@RequestParam(value = "isGiveback",defaultValue = "false") String isGiveback // 是否是反馈邮件
 	) throws Exception {
 		
 		//创建一个配置文件并保存
@@ -74,6 +75,10 @@ public class MailSenderController {
 		
 		//关闭连接
 		transport.close();
-		return "redirect:/seeParticularInfo";
+		if(isGiveback.equals("false")){
+			return "redirect:/seeParticularInfo";
+		}else{
+			return "redirect:/infos";
+		}
 	}
 }

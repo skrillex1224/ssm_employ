@@ -33,7 +33,6 @@
             margin-bottom: 8px;
             box-sizing: border-box;
         }
-
     </style>
 </head>
 <body>
@@ -60,7 +59,7 @@
                     <a class="nav-link" href="https://www.proginn.com/">资讯</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="<%=request.getContextPath()%>/infos">赞助</a>
+                    <a class="nav-link" href="<%=request.getContextPath()%>/infos">关于</a>
                 </li>
             </ul>
             </shiro:hasRole>

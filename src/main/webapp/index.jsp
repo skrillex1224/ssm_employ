@@ -102,7 +102,7 @@
                         </form>
                 </div>
                 <!--右侧图片展示栏-->
-                <div style=" position:absolute; left:37%; top:102.8%; z-index:1;width:420px;height:280px;">
+                <div style=" position:absolute; left:37%; top:104.4%; z-index:1;width:420px;height:280px;">
                         <table border="0" border-collapse="0" bgcolor="#F9F0DA">
                                 <tr style="width:720px;" >
                                         <td style="width:480px;height:186.6px;" colspan="2" rowspan="2" >
@@ -906,7 +906,7 @@
                                                            <td><%=hireInfo.getJobSeekers().get(i).getSeekerEmail()%></td>
                                                            <td><a href="<%=request.getContextPath()%>/static/resumes/resume_<%=hireInfo.getJobSeekers().get(i).getSeekerId()%>.docx">下载</a></td>
                                                            <td><%=hireInfo.getSeekHireInfos().get(i).getProcessStatus()%></td>
-                                                           <td><fmt:formatDate value="<%=hireInfo.getSeekHireInfos().get(i).getOrderInterviewTime()%>"/></td>
+                                                           <td> <fmt:formatDate value="<%=hireInfo.getSeekHireInfos().get(i).getOrderInterviewTime()%>"/></td>
                                                            <td><%=hireInfo.getSeekHireInfos().get(i).getInterviewResult()%></td>
 
                                                            <td> <button type="button" style="width: 60px" class="btn btn-success"  data-toggle="modal" data-target="#interviewResult" id="interview">修改</button></td>

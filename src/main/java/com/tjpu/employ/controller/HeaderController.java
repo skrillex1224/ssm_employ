@@ -19,7 +19,7 @@ public class HeaderController {
 		return "redirect:/searchAllEnterprises";
 	}
 	
-	//去咨询页面
+	//去赞助页面
 	@RequestMapping("/infos")
 	public String toInfos(){
 		
