@@ -635,13 +635,13 @@
                                                 <div class="form-group"  style="width: 60%;position:relative;left: 25%">
                                                         <label for="inputEmail3" class="col-sm-2 control-label">Email:</label>
                                                         <div class="col-sm-10">
-                                                                <input type="email" name="email" class="form-control" id="inputEmail3" placeholder="Email">
+                                                                <input type="email" name="email" class="form-control" id="inputEmail3" placeholder="Email" />
                                                         </div>
                                                 </div>
                                                 <div class="form-group"  style="width: 60%;position:relative;left: 25%">
                                                         <label for="inputPassword3" class="col-sm-2 control-label">Password:</label>
                                                         <div class="col-sm-10">
-                                                                <input type="password" name="password" class="form-control" id="inputPassword3" placeholder="Password">
+                                                                <input type="password"  name="password" class="form-control" id="inputPassword3" placeholder="Password" />
                                                         </div>
                                                 </div>
                                                 <div class="form-group">
@@ -666,7 +666,7 @@
                                                        <td>企业徽标</td>
                                                        <td><img style="width: 80px;height: 60px" src="${pageContext.request.contextPath}/static/imgs/img_${enterprise.enterId}.jpg"/></td>
                                                        <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#enterUser0">修改</button></td>
-                                                       <div class="modal  fade" id="enterUser0" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                        <div class="modal  fade" id="enterUser0" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                                                <div class="modal-dialog">
                                                                        <div class="modal-content">
                                                                                <div class="modal-header">

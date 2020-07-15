@@ -12,9 +12,8 @@
         <title>码农招聘平台</title>
 </head>
 <body>
-
-        <h1>您无权限访问该页面</h1>
         <jsp:include page="../headerPage/publicPage.jsp"></jsp:include>
+        <h1>您无权限访问该页面</h1>
         <a href="${pageContext.request.contextPath}/index.jsp">点此返回主页</a>
 </body>
 </html>

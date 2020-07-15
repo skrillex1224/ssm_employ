@@ -86,6 +86,7 @@
                                         <label for="exampleFormControlTextarea1"></label>
                                         <form action="${pageContext.request.contextPath}/sendEmail">
                                                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="4" resize="none" name="content"></textarea>
+                                                <input type="hidden" name="isGiveback" value="true"/>
 <%--                                                模态框--%>
                                                 <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                         <div class="modal-dialog">

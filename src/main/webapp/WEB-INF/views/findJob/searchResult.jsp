@@ -92,6 +92,7 @@
                         font-size: 16px;
                         color: #F9F0DA;
                 }
+
         </style>
 </head>
 <body>
@@ -107,19 +108,19 @@
 <p style="margin-left: 10%;font-weight: bold;font-size: 20px;font-family: 'kaiti'">
         根据相关性排序，得到以下结果：(共${search.totalPages}页，共${search.totalElements}条相关数据)
 </p>
-<table class="table table-hover" style="width: 80%;margin-left: 10%;font-weight: bolder;font-family: 'kaiTi'">
+<table class="table table-bordered" style="width: 80%;margin-left: 10%;font-weight: bolder;font-family: 'kaiTi'">
         <c:forEach items="${search.content}" var="content">
                 <tr >
                         <td colspan="3" rowspan="3">
                                 <img src="${pageContext.request.contextPath}/static/imgs/img_${content.enterId}.jpg"
                                 style="width: 120px;height: 100px;margin-right: -20px;">
                         </td>
-                        <td   class="table-secondary"  colspan="3">
+                        <td   colspan="3">
                                 <a href="${pageContext.request.contextPath}/searchHireInfoByEnterName?enterName=${content.enterName}">
-                                        公司：${content.enterName}
+                                        <span >公司：${content.enterName}</span>
                                 </a>
                         </td>
-                        <td colspan="3" class="table-secondary">
+                        <td colspan="3">
                                 <a href="${pageContext.request.contextPath}/seeParticularInfo?hireId=${content.hireId}">
 
                                         招聘岗位：${content.hireOccupation}

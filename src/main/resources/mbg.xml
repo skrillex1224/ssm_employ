@@ -45,6 +45,7 @@
         <table tableName="job_seeker" domainObjectName="JobSeeker"></table>
 
 
+
     </context>
 </generatorConfiguration>
 

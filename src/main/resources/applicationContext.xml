@@ -57,7 +57,7 @@
     </tx:advice>
 <!--启用注解AOP-->
     <aop:aspectj-autoproxy proxy-target-class="true"/>
-<!--Shiro的realm注册,安全管理器-->
+<!--Shiro-->
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <property name="sessionMode" value="native"/>
         <property name="authenticator" ref="authenticator"></property>
@@ -67,14 +67,13 @@
             </list>
         </property>
     </bean>
-<!--多realm认证策略-->
+
     <bean id="authenticator" class="org.apache.shiro.authc.pam.ModularRealmAuthenticator">
         <property name="authenticationStrategy">
-            <bean class="org.apache.shiro.authc.pam.FirstSuccessfulStrategy"></bean>
+            <bean class="org.apache.shiro.authc.pam.AtLeastOneSuccessfulStrategy"></bean>
         </property>
     </bean>
 
-    <!--    Shiro缓存管理-->
 <!--    启用Shiro注解-->
     <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"></bean>
 

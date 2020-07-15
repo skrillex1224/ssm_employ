@@ -265,7 +265,7 @@
                     <div class="container">
                         <h1 style="color: white; margin: 0; text-align: center;font-family: 迷你简卡通;">Log in</h1>
                         <form action="<%=request.getContextPath()%>/login" method="post">
-                                <h4 style="color: red;text-align: center;"> ${msg}</h4>
+                                <h4 style="color: red;text-align: center;"> ${msg}</ h4>
 <%--                                <div class="container" style="align-content: center">--%>
 <%--                                    <div style="width: 30%;display:inline-block;align-content: center"><input type="radio" name="radio" style="display: inline" data-labelauty="视觉设计师"></div>--%>
 <%--                                    <div style="width: 40%;display:inline-block;align-content: center"><input type="radio" name="radio" style="display: inline" data-labelauty="交互设计师"></div>--%>
